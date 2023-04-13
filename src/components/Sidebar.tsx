@@ -26,11 +26,13 @@ import { NavItem } from "./Navitem";
 
 interface LinkItemProps {
   name: string;
+  active?: boolean;
   icon: IconType;
 }
+
 const LinkItems: Array<LinkItemProps> = [
   { name: "Pinned", icon: FaRegEnvelope },
-  { name: "All", icon: TbMessages },
+  { name: "All", icon: TbMessages, active: true },
   { name: "Live Chat", icon: BsEnvelopePaper },
   { name: "Archived", icon: RiArchiveDrawerFill },
   { name: "Blocked", icon: ImBlocked },
@@ -40,10 +42,13 @@ const LinkItems: Array<LinkItemProps> = [
 export const Sidebar = ({ children }: { children: ReactNode }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box
+      minH="calc(100vh - 100px)"
+      bg={useColorModeValue("gray.100", "gray.900")}
+    >
       <SidebarContent
         onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
+        display={{ base: "none", md: "flex" }}
       />
       <Drawer
         autoFocus={false}
@@ -73,7 +78,9 @@ interface SidebarProps extends BoxProps {
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
-    <Box
+    <Flex
+      gap="4"
+      flexDirection="column"
       bg={useColorModeValue("white", "blackAlpha.800")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.800")}
@@ -84,11 +91,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem isActive={link?.active} key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>
       ))}
-    </Box>
+    </Flex>
   );
 };
 

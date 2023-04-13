@@ -1,6 +1,7 @@
 import Head from "next/head";
-import Starter from "@/components/Starter";
 import useUserStore from "@/stores/useUserStore";
+import { Layout } from "@/components/Layout";
+import { Box } from "@chakra-ui/react";
 
 export default function Home() {
   const currentUser = useUserStore((state) => state.currentUser);
@@ -14,7 +15,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Starter />
+        <Layout>
+          <Box>Hi There</Box>
+        </Layout>
       </main>
     </>
   );
